@@ -42,6 +42,7 @@ app.directive('ionicDatepicker', ['$ionicPopup', 'DatepickerService', function (
       callback: '=callback',
       title: '=title',
       disabledDates: '=?disableddates',
+      enabledDates: '=?enableddates',
       mondayFirst: '=?mondayfirst'
     },
     link: function (scope, element, attrs) {
@@ -59,7 +60,7 @@ app.directive('ionicDatepicker', ['$ionicPopup', 'DatepickerService', function (
         scope.ipDate = new Date();
       }
 
-      if (!angular.isDefined(scope.mondayFirst) || scope.mondayFirst == "false") {
+      if (!angular.isDefined(scope.mondayFirst) || scope.mondayFirst == "false" || scope.mondayFirst == false) {
         scope.mondayFirst = false;
       } else {
         scope.mondayFirst = true;
@@ -70,6 +71,14 @@ app.directive('ionicDatepicker', ['$ionicPopup', 'DatepickerService', function (
       } else {
         for (var i = 0; i < scope.disabledDates.length; i++) {
           scope.disabledDates[i] = scope.disabledDates[i].getTime();
+        }
+      }
+
+      if (!angular.isDefined(scope.enabledDates)) {
+        scope.enabledDates = [];
+      } else {
+        for (var i = 0; i < scope.enabledDates.length; i++) {
+          scope.enabledDates[i] = scope.enabledDates[i].getTime();
         }
       }
 
@@ -214,7 +223,9 @@ app.directive('ionicDatepicker', ['$ionicPopup', 'DatepickerService', function (
             {
               text: 'Close',
               onTap: function (e) {
-                scope.callback(undefined);
+                if(typeof scope.callback === 'function'){
+                  scope.callback(undefined);
+                }
               }
             },
             {
@@ -253,7 +264,9 @@ app.directive('ionicDatepicker', ['$ionicPopup', 'DatepickerService', function (
 
                 if (scope.date_selection.selected === true) {
                   scope.ipDate = angular.copy(scope.date_selection.selectedDate);
-                  scope.callback(scope.ipDate);
+                  if(typeof scope.callback === 'function'){
+                    scope.callback(scope.ipDate);
+                  }                    
                 } else {
                   e.preventDefault();
                 }

@@ -36,7 +36,9 @@
 }
 
 .today {
-  background-color: rgba(186, 186, 186, 1);
+  /*background-color: rgba(186, 186, 186, 1);*/
+  border-radius: 3px;
+  border: 1px solid rgba(56, 126, 245, 1);
 }
 
 .pointer_events_none {
