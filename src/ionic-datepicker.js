@@ -223,6 +223,8 @@ app.directive('ionicDatepicker', ['$ionicPopup', 'DatepickerService', function (
             {
               text: 'Close',
               onTap: function (e) {
+                //  to clear/hide the validation message on re-opening the calendar component
+                scope.date_selection.submitted = false;
                 if(typeof scope.callback === 'function'){
                   scope.callback(undefined);
                 }
@@ -248,10 +250,10 @@ app.directive('ionicDatepicker', ['$ionicPopup', 'DatepickerService', function (
                   epochLocal: tempEpoch.getTime(),
                   epochUTC: (tempEpoch.getTime() + (tempEpoch.getTimezoneOffset() * 60 * 1000))
                 };
-
-                scope.selctedDateString = todayObj.dateString;
-                scope.date_selection.selected = true;
-                scope.date_selection.selectedDate = new Date(todayObj.dateString);
+                // Commented intentionally to :: Today will just refresh the calendar UI to show current month dates, but will not to select
+                // scope.selctedDateString = todayObj.dateString;
+                // scope.date_selection.selected = true;
+                // scope.date_selection.selectedDate = new Date(todayObj.dateString);
                 refreshDateList(new Date());
                 e.preventDefault();
               }
